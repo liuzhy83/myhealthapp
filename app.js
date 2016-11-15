@@ -18,6 +18,15 @@ app.set('views', path.join(__dirname, 'views'));
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
+app.all('*', function(req, res, next) {
+    console.log('request-url:' + req.url);
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+    res.header("X-Powered-By", ' 3.2.1');
+    res.header("Content-Type", "application/json;charset=utf-8");
+    next();
+});
 //解析JSON格式的数据
 app.use(bodyParser.json());
 //解析UTF8格式的数据
@@ -26,6 +35,8 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 //静态文件目录
 app.use(express.static(path.join(__dirname, 'public')));
+
+
 
 app.use('/', routes);
 
